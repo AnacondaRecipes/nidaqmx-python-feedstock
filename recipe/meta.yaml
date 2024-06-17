@@ -12,19 +12,22 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
     - python >=3.8, <4.0
     - pip
     - poetry >=1.2
+    - wheel
   run:
     - python >=3.8, <4.0
     - numpy >=1.22, <2.0
     - deprecation >=2.1
 
 test:
+  commands:
+    - pip check
   imports:
     - nidaqmx
 
@@ -44,6 +47,10 @@ about:
   dev_url: https://github.com/ni/nidaqmx-python
 
 extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/50937
+    reason: Client request
   recipe-maintainers:
+    - ianaobi
     - carlodri
     - lstebel
